@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>응근고사 💩</title>
+
+<style>
+
+body{
+
+  background:rgb(127,80,6);
+  color:rgb(239,11,197);
+
+  text-align:center;
+
+  font-family:Arial;
+
+  margin:0;
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+
+}
+
+h1{
+
+  font-size:70px;
+
+  margin-top:40px;
+
+}
+
+#question{
+
+  font-size:40px;
+
+  margin-top:50px;
+
+  padding:20px;
+
+}
+
+button{
+
+  display:block;
+
+  margin:20px auto;
+
+  padding:20px 40px;
+
+  font-size:25px;
+
+  width:500px;
+
+  cursor:pointer;
+
+  border:none;
+
+  border-radius:20px;
+
+  background:white;
+
+  transition:0.3s;
+
+}
+
+button:hover{
+
+  transform:scale(1.05);
+
+  background:yellow;
+
+}
+
+#scoreBoard{
+
+  font-size:35px;
+
+  margin-top:30px;
+
+}
+
+.particle{
+
+  position:fixed;
+
+  font-size:60px;
+
+  animation:fly 2s linear forwards;
+
+  pointer-events:none;
+
+  z-index:9999;
+
+}
+
+@keyframes fly{
+
+  0%{
+
+    transform:translateY(0px) scale(1);
+
+    opacity:1;
+
+  }
+
+  100%{
+
+    transform:translateY(-700px) scale(2);
+
+    opacity:0;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>응근고사 💩</h1>
+
+<h2 id="question"></h2>
+
+<div id="choices"></div>
+
+<div id="scoreBoard">
+
+점수 :
+<span id="score">0</span>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+  question:"응근이의 피부색은?",
+  choices:["초록색","살구색","무지개색"],
+  answer:"초록색"
+},
+
+{
+  question:"응근이의 화학식은?",
+  choices:["C6H12O6","KTW4","YE3SKN"],
+  answer:"YE3SKN"
+},
+
+{
+  question:"응근이의 거주지는?",
+  choices:["원이의 똥 속","세은이의 뇌 속","안나의 귀 속"],
+  answer:"안나의 귀 속"
+},
+
+{
+  question:"응근이의 생일은?",
+  choices:["2월 27일","13월 9일","11월 19일"],
+  answer:"11월 19일"
+},
+
+{
+  question:"응근이가 가장 좋아하는 간식은?",
+  choices:[
+    "껍질 까지 않은 감자",
+    "빠삐코",
+    "커피찌꺼기"
+  ],
+  answer:"껍질 까지 않은 감자"
+},
+
+{
+  question:"응근이의 배우자는?",
+  choices:[
+    "세바스찬",
+    "새 봐 수찬!",
+    "민수",
+    "18세 박수찬",
+    "원바스찬"
+  ],
+  answer:"세바스찬"
+},
+
+{
+  question:"응근이가 은근히 잘하는 것은?",
+  choices:[
+    "똥먹기",
+    "뽀뽀",
+    "털 뽑기",
+    "알 낳기",
+    "바닥에 떨어져 있는 머리카락 찾기"
+  ],
+  answer:"알 낳기"
+},
+
+{
+  question:"응근이의 최애 티셔츠는?",
+  choices:[
+    "빨간 땡땡이 무늬 티셔츠",
+    "외계인 토끼 티셔츠",
+    "대머리 아저씨가 그려진 크롭티",
+    "하츠네미쿠 티셔츠",
+    "언더붑"
+  ],
+  answer:"외계인 토끼 티셔츠"
+},
+
+{
+  question:"응근이의 전 배우자는?",
+  choices:[
+    "마이클",
+    "초코",
+    "큐링이",
+    "칫솔",
+    "아니근이",
+    "아니그니까",
+    "불근이"
+  ],
+  answer:"불근이"
+},
+
+{
+  question:"응근이의 영어이름은?",
+  choices:[
+    "Yes kn",
+    "POop",
+    "Se eun",
+    "mung mung e",
+    "eun kn",
+    "NO kn",
+    "Sleepy"
+  ],
+  answer:"Yes kn"
+}
+
+];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+showQuestion();
+
+function showQuestion(){
+
+  let q = questions[currentQuestion];
+
+  document.getElementById("question").innerHTML =
+  q.question;
+
+  let choicesHTML = "";
+
+  for(let i=0; i<q.choices.length; i++){
+
+    choicesHTML += `
+
+    <button onclick="checkAnswer('${q.choices[i]}')">
+
+    ${q.choices[i]}
+
+    </button>
+
+    `;
+
+  }
+
+  document.getElementById("choices").innerHTML =
+  choicesHTML;
+
+}
+
+function emojiBurst(emojis){
+
+  for(let i=0; i<80; i++){
+
+    let particle =
+    document.createElement("div");
+
+    particle.className = "particle";
+
+    particle.innerHTML =
+
+    emojis[
+      Math.floor(
+        Math.random() * emojis.length
+      )
+    ];
+
+    particle.style.left =
+    Math.random() * 100 + "vw";
+
+    particle.style.top =
+    Math.random() * 100 + "vh";
+
+    document.body.appendChild(particle);
+
+    setTimeout(function(){
+
+      particle.remove();
+
+    }, 2000);
+
+  }
+
+}
+
+function correctEffect(){
+
+  emojiBurst([
+    "💖",
+    "🎆",
+    "✨",
+    "🥳"
+  ]);
+
+}
+
+function wrongEffect(){
+
+  emojiBurst([
+    "💩",
+    "💀",
+    "☠️",
+    "🤡"
+  ]);
+
+}
+
+function finalEffect(){
+
+  if(score <= 5){
+
+    emojiBurst([
+      "💩",
+      "💀",
+      "☠️",
+      "🤡"
+    ]);
+
+  }
+
+  else{
+
+    emojiBurst([
+      "💖",
+      "🎆",
+      "😁",
+      "🥳",
+      "✨"
+    ]);
+
+  }
+
+}
+
+function checkAnswer(choice){
+
+  let correctAnswer =
+  questions[currentQuestion].answer;
+
+  if(choice == correctAnswer){
+
+    score++;
+
+    correctEffect();
+
+  }
+
+  else{
+
+    wrongEffect();
+
+  }
+
+  document.getElementById("score").innerHTML =
+  score;
+
+  currentQuestion++;
+
+  setTimeout(function(){
+
+    if(currentQuestion < questions.length){
+
+      showQuestion();
+
+    }
+
+    else{
+
+      document.body.innerHTML =
+
+      `
+
+      <h1 style="margin-top:200px;">
+
+      시험 종료 💩
+
+      </h1>
+
+      <h2 style="font-size:60px;">
+
+      최종 점수 :
+      ${score} / ${questions.length}
+
+      </h2>
+
+      `;
+
+      finalEffect();
+
+    }
+
+  }, 1500);
+
+}
+
+</script>
+
+</body>
+
+</html>
